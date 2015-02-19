@@ -452,7 +452,8 @@ class FPM::Package::RPM < FPM::Package
     # scan all conf file paths for files and add them
     allconfigs = []
     self.config_files.each do |path|
-      cfg_path = path #File.join(staging_path, path)
+      cfg_path = File.join(staging_path, path) # path = etc/zombie/zombie-eng-ch-zed-action/service.yaml
+      FileUtils.copy(path, cfg_path) unless File.exist?(cfg_path)
       raise "Config file path #{cfg_path} does not exist" unless File.exist?(cfg_path)
       Find.find(cfg_path) do |p|
         allconfigs << p.gsub("#{staging_path}/", '') if File.file? p
