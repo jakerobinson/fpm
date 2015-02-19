@@ -456,7 +456,7 @@ class FPM::Package::RPM < FPM::Package
       logger.debug(path)
       logger.debug(::Dir.pwd)
       logger.debug(cfg_path)
-      FileUtils.copy(path, cfg_path) unless File.exist?(cfg_path)
+      FileUtils.cp_r(path, cfg_path) unless File.exist?(cfg_path)
       raise "Config file path #{cfg_path} does not exist" unless File.exist?(cfg_path)
       Find.find(cfg_path) do |p|
         allconfigs << p.gsub("#{staging_path}/", '') if File.file? p
